@@ -4,7 +4,7 @@ import {StudentService} from '../../services/student.service';
 import {StudentEditComponent} from '../student-edit/student-edit.component';
 import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {StudentAddComponent} from '../student-add/student-add.component';
-import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
+import {StudentDeleteComponent} from '../student-delete/student-delete.component';
 
 @Component({
   selector: 'app-overview',
@@ -49,13 +49,11 @@ export class OverviewComponent implements OnInit {
 
   /** Deletes student from the DB after user confirmation */
   delete(student: Student): void {
-    this.modalRef = this.modalService.open(ConfirmDialogComponent);
+    this.modalRef = this.modalService.open(StudentDeleteComponent);
     this.modalRef.componentInstance.student = student;
     this.modalRef.componentInstance.modalRef = this.modalRef;
     this.modalRef.result.then(() => {
-      this.studentService.deleteStudent(student.id).subscribe(() => {
-        this.getStudents();
-      });
+      this.getStudents();
     }, () => {});
   }
 

@@ -7,7 +7,6 @@ import {UiModule} from './ui/ui.module';
 import {InMemoryDataService} from './services/in-memory-data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {HeaderComponent} from './ui/header/header.component';
-import {AuthGuardInterceptor} from './interceptors/auth-guard.interceptor';
 import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
 
 @NgModule({
@@ -25,8 +24,7 @@ import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
     AppComponent, HeaderComponent
   ],
   providers: [
-    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true },
-    { provide: HTTP_INTERCEPTORS, useClass: AuthGuardInterceptor, multi: true}
+    { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]
 })

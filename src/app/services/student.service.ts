@@ -8,7 +8,11 @@ import {Student} from '../entities/student';
 })
 export class StudentService {
 
-  constructor(private http: HttpClient) { }
+  headers: HttpHeaders;
+
+  constructor(private http: HttpClient) {
+    this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+  }
 
 
   /** Gets a list of students */
@@ -24,7 +28,7 @@ export class StudentService {
   /** Adds student to the db */
   createStudent (student: Student): any {
     return this.http.post('api/students', student,
-      { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
+      { headers: this.headers }).pipe(
       catchError((err) => {
         return err;
       })
@@ -36,7 +40,7 @@ export class StudentService {
   deleteStudent (id: number): any {
     const url = `/api/students/${id}`;
 
-    return this.http.delete(url, { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
+    return this.http.delete(url, { headers: this.headers }).pipe(
       catchError((err) => {
         return err;
       })
@@ -47,7 +51,7 @@ export class StudentService {
   /** Update existing student */
   updateStudent (student: Student): any {
     return this.http.put('api/students', student,
-    { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
+    { headers: this.headers }).pipe(
       catchError((err) => {
         return err;
       })

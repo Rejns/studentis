@@ -7,7 +7,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {DataTableModule} from 'angular-6-datatable';
 import {StudentAddComponent} from './student-add/student-add.component';
 import {StudentEditComponent} from './student-edit/student-edit.component';
-import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.component';
+import { StudentDeleteComponent } from './student-delete/student-delete.component';
 
 @NgModule({
   imports: [
@@ -17,8 +17,8 @@ import { ConfirmDialogComponent } from './confirm-dialog/confirm-dialog.componen
     DataTableModule,
     NgbModule
   ],
-  declarations: [LoginComponent, OverviewComponent, StudentEditComponent, StudentAddComponent, ConfirmDialogComponent],
+  declarations: [LoginComponent, OverviewComponent, StudentEditComponent, StudentAddComponent, StudentDeleteComponent],
   providers: [NgbActiveModal],
-  entryComponents: [StudentEditComponent, StudentAddComponent, ConfirmDialogComponent]
+  entryComponents: [StudentEditComponent, StudentAddComponent, StudentDeleteComponent]
 })
 export class UiModule { }
