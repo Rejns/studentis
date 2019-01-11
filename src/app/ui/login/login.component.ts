@@ -1,7 +1,7 @@
-import { Component, OnInit } from '@angular/core';
-import { AuthenticationService } from '../../services/authentication.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
-import { Router } from '@angular/router';
+import {Component, OnInit} from '@angular/core';
+import {AuthenticationService} from '../../services/authentication.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Router} from '@angular/router';
 
 @Component({
   selector: 'app-form',
@@ -18,6 +18,7 @@ export class LoginComponent implements OnInit {
               private formBuilder: FormBuilder,
               private router: Router) { }
 
+
   ngOnInit() {
     if (this.authenticationService.isAuthenticated()) {
       this.router.navigateByUrl('/overview');
@@ -31,20 +32,24 @@ export class LoginComponent implements OnInit {
     });
   }
 
-  onSubmit() {
+
+  /** Login user and on success navigate to /overview. Prevent login if form is invalid. */
+  login() {
     this.formSubmitted = true;
 
     if (this.loginForm.invalid) {
       return;
     }
 
-    this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe((user) => {
+    this.authenticationService.login(this.f.username.value, this.f.password.value).subscribe(() => {
       this.router.navigateByUrl('/overview');
     }, (res) => {
       this.error = res.error;
     });
   }
 
+
+  /** Helper for easier form field access */
   get f() {
     return this.loginForm.controls;
   }

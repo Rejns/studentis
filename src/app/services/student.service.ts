@@ -1,6 +1,6 @@
-import { Injectable } from '@angular/core';
+import {Injectable} from '@angular/core';
 import {HttpClient, HttpHeaders} from '@angular/common/http';
-import { tap, catchError, map } from 'rxjs/operators';
+import {catchError} from 'rxjs/operators';
 import {Student} from '../entities/student';
 
 @Injectable({
@@ -10,6 +10,8 @@ export class StudentService {
 
   constructor(private http: HttpClient) { }
 
+
+  /** Gets a list of students */
   getStudents (pages): any {
     return this.http.get('api/students', pages).pipe(
       catchError((err) => {
@@ -18,6 +20,8 @@ export class StudentService {
     );
   }
 
+
+  /** Adds student to the db */
   createStudent (student: Student): any {
     return this.http.post('api/students', student,
       { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(
@@ -27,6 +31,8 @@ export class StudentService {
     );
   }
 
+
+  /** Deletes student from the db */
   deleteStudent (id: number): any {
     const url = `/api/students/${id}`;
 
@@ -37,6 +43,8 @@ export class StudentService {
     );
   }
 
+
+  /** Update existing student */
   updateStudent (student: Student): any {
     return this.http.put('api/students', student,
     { headers: new HttpHeaders({ 'Content-Type': 'application/json' })}).pipe(

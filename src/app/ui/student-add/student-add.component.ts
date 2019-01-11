@@ -1,7 +1,7 @@
-import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
-import { StudentService } from '../../services/student.service';
-import { FormBuilder, FormGroup, Validators } from '@angular/forms';
+import {Component, Input, OnInit} from '@angular/core';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
+import {StudentService} from '../../services/student.service';
+import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 
 @Component({
   selector: 'app-student-add',
@@ -10,22 +10,19 @@ import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 })
 export class StudentAddComponent implements OnInit {
 
-  @Output() studentAdd = new EventEmitter();
+  @Input() modalRef: NgbModalRef;
   subjects: String[];
   formSubmitted = false;
   studentAddForm: FormGroup;
-  modalRef: NgbModalRef;
 
-  constructor(private modalService: NgbModal,
-              private formBuilder: FormBuilder,
+  constructor(private formBuilder: FormBuilder,
               private studentService: StudentService) { }
+
 
   ngOnInit() {
     // TODO: create service for subjects
     this.subjects = ['Maths', 'Maths2', 'English'];
-  }
 
-  open(content) {
     // reset inputs on dialog open
     this.studentAddForm = this.formBuilder.group({
       studentName: ['', Validators.compose([
@@ -34,35 +31,36 @@ export class StudentAddComponent implements OnInit {
         Validators.maxLength(30)])],
       studentSubject: [null, Validators.required]
     });
-
-    this.formSubmitted = false;
-
-    this.modalRef = this.modalService.open(content);
-    this.modalRef.result.then((result) => {
-      this.studentService.createStudent({
-        id: null,
-        name: this.f.studentName.value,
-        subject: this.f.studentSubject.value
-      }).subscribe(result2 => {
-        // notify parent component about successful student create to refresh list
-        this.studentAdd.emit();
-      });
-    }, (reason) => {
-    });
   }
 
-  save() {
+
+  /** Adds new student to the DB */
+  addStudent() {
     this.formSubmitted = true;
-    if (!this.studentAddForm.valid) {
+
+    if (this.studentAddForm.invalid) {
       return;
     }
 
+    this.studentService.createStudent({
+      id: null,
+      name: this.f.studentName.value,
+      subject: this.f.studentSubject.value
+    }).subscribe(() => {
+      this.modalRef.close();
+    });
+  }
+
+
+  /** Close modal */
+  close() {
     this.modalRef.close();
   }
 
+
+  /** Helper for easier form field access */
   get f() {
     return this.studentAddForm.controls;
   }
-
 
 }

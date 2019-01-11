@@ -10,6 +10,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
 
   constructor(private router: Router) {}
 
+  /** Http interceptor that simulates backend. Prevent user from using API if user is not logged in. */
   intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
     const registeredUser = { id: 1, username: 'test', password: 'test' };

@@ -1,7 +1,7 @@
 <h1>Welcome to Studentis</h1>
 <h6>Simple student management</h6>
 <h2>Login</h2>
-<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+<form [formGroup]="loginForm" (ngSubmit)="login()">
   <div class="form-group">
     <label for="username">Username</label>
     <input id="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': f.username.errors && (f.username.dirty || formSubmitted) }" />

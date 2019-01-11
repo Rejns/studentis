@@ -1,6 +1,6 @@
-import {Component, EventEmitter, Input, OnInit, Output} from '@angular/core';
+import {Component, Input, OnInit} from '@angular/core';
 import {Student} from '../../entities/student';
-import {NgbModal} from '@ng-bootstrap/ng-bootstrap';
+import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {StudentService} from '../../services/student.service';
 
 @Component({
@@ -11,34 +11,35 @@ import {StudentService} from '../../services/student.service';
 export class StudentEditComponent implements OnInit {
 
   @Input() student: Student;
-  @Output() studentUpdate = new EventEmitter();
+  @Input() modalRef: NgbModalRef;
   subjects: String[];
   subject: String;
 
-  constructor(private modalService: NgbModal,
-              private studentService: StudentService) { }
+  constructor(private studentService: StudentService) { }
+
 
   ngOnInit() {
     // TODO: create service for subjects
     this.subjects = ['Maths', 'Maths2', 'English'];
+    this.subject = this.student.subject;
   }
 
-  open(content) {
-    // current student data
-    this.subject = this.student.subject;
 
-    this.modalService.open(content).result.then((result) => {
-      // in case user confirms changes send new data to backend
-      this.studentService.updateStudent({
-        id: this.student.id,
-        name: this.student.name,
-        subject: this.subject
-      }).subscribe(result2 => {
-        // notify parent component about successful student update to refresh list
-        this.studentUpdate.emit();
-      });
-    }, (reason) => {
+  /** Update existing student on success close modal */
+  save() {
+    this.studentService.updateStudent({
+      id: this.student.id,
+      name: this.student.name,
+      subject: this.subject
+    }).subscribe(() => {
+      this.modalRef.close();
     });
+  }
+
+
+  /** Close modal */
+  close() {
+    this.modalRef.close();
   }
 
 }

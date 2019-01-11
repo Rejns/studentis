@@ -2,12 +2,8 @@
   <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="resultsPerPage">
     <thead>
     <tr>
-      <th>
-        <mfDefaultSorter by="name">Name</mfDefaultSorter>
-      </th>
-      <th>
-        <mfDefaultSorter by="subject">Subject</mfDefaultSorter>
-      </th>
+      <th>Name</th>
+      <th>Subject</th>
       <th></th>
     </tr>
     </thead>
@@ -16,13 +12,16 @@
       <td>{{ item.name }}</td>
       <td>{{ item.subject }}</td>
       <td>
-        <app-student-edit [student]="item" (studentUpdate)="getStudents()" style="float: right;"></app-student-edit>
+        <button class="btn btn-lg btn-outline-primary" (click)="openStudentEditDialog(item)" style="float: right;">EDIT</button>
         <button class="btn btn-lg btn-outline-danger" (click)="delete(item.id)" style="float: right; margin-right: 0.75rem;">DELETE</button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
-<ngb-pagination style="position: absolute; margin-left: 10px; bottom: 0;" [collectionSize]="collectionSize" [pageSize]="resultsPerPage" [(page)]="page" (pageChange)="onPageChange()" aria-label="Default pagination"></ngb-pagination>
-<app-student-add (studentAdd)="getStudents()" style="position: absolute; bottom: 10px; right: 10px;"></app-student-add>
+<div>
+  <ngb-pagination style="position: absolute; margin-left: 10px; bottom: 0;" [collectionSize]="collectionSize" [pageSize]="resultsPerPage" [(page)]="page" (pageChange)="onPageChange()" aria-label="Default pagination"></ngb-pagination>
+  <button class="btn btn-lg btn-outline-primary" (click)="openStudentAddDialog()" style="position: absolute; bottom: 12px; right: 10px;">ADD</button>
+</div>
+
 
