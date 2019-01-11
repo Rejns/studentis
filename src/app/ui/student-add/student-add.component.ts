@@ -1,5 +1,5 @@
 import { Component, EventEmitter, OnInit, Output } from '@angular/core';
-import { NgbModal } from '@ng-bootstrap/ng-bootstrap';
+import { NgbModal, NgbModalRef } from '@ng-bootstrap/ng-bootstrap';
 import { StudentService } from '../../services/student.service';
 import { FormBuilder, FormGroup, Validators } from '@angular/forms';
 
@@ -14,6 +14,7 @@ export class StudentAddComponent implements OnInit {
   subjects: String[];
   formSubmitted = false;
   studentAddForm: FormGroup;
+  modalRef: NgbModalRef;
 
   constructor(private modalService: NgbModal,
               private formBuilder: FormBuilder,
@@ -36,7 +37,8 @@ export class StudentAddComponent implements OnInit {
 
     this.formSubmitted = false;
 
-    this.modalService.open(content).result.then((result) => {
+    this.modalRef = this.modalService.open(content);
+    this.modalRef.result.then((result) => {
       this.studentService.createStudent({
         id: null,
         name: this.f.studentName.value,
@@ -49,13 +51,13 @@ export class StudentAddComponent implements OnInit {
     });
   }
 
-  save(modal: any) {
+  save() {
     this.formSubmitted = true;
     if (!this.studentAddForm.valid) {
       return;
     }
 
-    modal.close();
+    this.modalRef.close();
   }
 
   get f() {
