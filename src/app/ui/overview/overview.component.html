@@ -1,5 +1,5 @@
-<div class="table-wrapper" style="position: absolute; left: 0; top: 56px; bottom: 70px; overflow: auto; width: 100%; border-bottom: 1px solid #eee;">
-  <table class="table table-striped" [mfData]="data" #mf="mfDataTable" [mfRowsOnPage]="resultsPerPage">
+<div class="table-wrapper">
+  <table class="table table-striped">
     <thead>
     <tr>
       <th>Name</th>
@@ -8,20 +8,22 @@
     </tr>
     </thead>
     <tbody>
-    <tr *ngFor="let item of mf.data">
+    <tr *ngFor="let item of data">
       <td>{{ item.name }}</td>
       <td>{{ item.subject }}</td>
       <td>
-        <button class="btn btn-lg btn-outline-primary" (click)="openStudentEditDialog(item)" style="float: right;">EDIT</button>
-        <button class="btn btn-lg btn-outline-danger" (click)="delete(item.id)" style="float: right; margin-right: 0.75rem;">DELETE</button>
+        <button class="btn btn-lg btn-outline-primary edit" (click)="openStudentEditDialog(item)">EDIT</button>
+        <button class="btn btn-lg btn-outline-danger delete" (click)="delete(item)">DELETE</button>
       </td>
     </tr>
     </tbody>
   </table>
 </div>
 <div>
-  <ngb-pagination style="position: absolute; margin-left: 10px; bottom: 0;" [collectionSize]="collectionSize" [pageSize]="resultsPerPage" [(page)]="page" (pageChange)="onPageChange()" aria-label="Default pagination"></ngb-pagination>
-  <button class="btn btn-lg btn-outline-primary" (click)="openStudentAddDialog()" style="position: absolute; bottom: 12px; right: 10px;">ADD</button>
+  <ngb-pagination class="pagination" [collectionSize]="collectionSize" [pageSize]="resultsPerPage" [(page)]="page" (pageChange)="onPageChange()" aria-label="Default pagination"></ngb-pagination>
+  <button class="btn btn-lg btn-primary add" (click)="openStudentAddDialog()">ADD</button>
 </div>
+
+
 
 

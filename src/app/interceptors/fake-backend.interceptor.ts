@@ -24,7 +24,7 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         };
         return of(new HttpResponse({ status: 200, body }));
       } else {
-        // TODO: return 401
+        // simulate error response
         return throwError({ error: { message: 'Username or password is incorrect' } });
       }
     }

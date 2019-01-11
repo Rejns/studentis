@@ -1,0 +1,15 @@
+.container .card {
+  margin: 0 auto;
+}
+
+.container .card h6 {
+  margin-bottom: 30px;
+}
+
+.container .card .btn.btn-primary {
+  float: right;
+}
+
+.container .card .alert-danger {
+  margin-bottom: 10px;
+}

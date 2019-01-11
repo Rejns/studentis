@@ -1,0 +1,31 @@
+.table-wrapper{
+  position: absolute;
+  left: 0;
+  top: 56px;
+  bottom: 70px;
+  overflow: auto;
+  width: 100%;
+  border-bottom: 1px solid #eee;
+}
+
+.table-wrapper .edit {
+  margin-right: 0.75rem;
+  float: right;
+}
+
+.table-wrapper .delete {
+  float: right;
+  margin-right: 10px;
+}
+
+.add {
+  position: absolute;
+  bottom: 12px;
+  right: 10px;
+}
+
+.pagination {
+  position: absolute;
+  margin-left: 10px;
+  bottom: 0;
+}

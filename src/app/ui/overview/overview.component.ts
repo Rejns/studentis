@@ -2,9 +2,9 @@ import {Component, OnInit} from '@angular/core';
 import {Student} from '../../entities/student';
 import {StudentService} from '../../services/student.service';
 import {StudentEditComponent} from '../student-edit/student-edit.component';
-import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
-import {ComponentModalService} from '../../services/component-modal.service';
+import {NgbModal, NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {StudentAddComponent} from '../student-add/student-add.component';
+import {ConfirmDialogComponent} from '../confirm-dialog/confirm-dialog.component';
 
 @Component({
   selector: 'app-overview',
@@ -21,7 +21,7 @@ export class OverviewComponent implements OnInit {
   modalRef: NgbModalRef;
 
   constructor(private studentService: StudentService,
-              private componentModal: ComponentModalService) {}
+              private modalService: NgbModal) {}
 
 
   ngOnInit() {
@@ -47,17 +47,25 @@ export class OverviewComponent implements OnInit {
   }
 
 
-  /** Deletes student from the DB */
-  delete(id: number): void {
-    this.studentService.deleteStudent(id).subscribe(() => {
-      this.getStudents();
-    });
+  /** Deletes student from the DB after user confirmation */
+  delete(student: Student): void {
+    this.modalRef = this.modalService.open(ConfirmDialogComponent);
+    this.modalRef.componentInstance.student = student;
+    this.modalRef.componentInstance.modalRef = this.modalRef;
+    this.modalRef.result.then(() => {
+      this.studentService.deleteStudent(student.id).subscribe(() => {
+        this.getStudents();
+      });
+    }, () => {});
   }
 
 
   /** Opens dialog for editing student and on success refreshes student list */
   openStudentEditDialog(student: Student) {
-    this.modalRef = this.componentModal.openStudentEdit(StudentEditComponent, student);
+    this.modalRef = this.modalService.open(StudentEditComponent);
+    this.modalRef.componentInstance.student = student;
+    this.modalRef.componentInstance.subject = student.subject;
+    this.modalRef.componentInstance.modalRef = this.modalRef;
     this.modalRef.result.then(() => {
       this.getStudents();
     });
@@ -66,7 +74,8 @@ export class OverviewComponent implements OnInit {
 
   /** Opens dialog for adding a student and on success refreshes student list */
   openStudentAddDialog() {
-    this.modalRef = this.componentModal.openStudentAdd(StudentAddComponent);
+    this.modalRef = this.modalService.open(StudentAddComponent);
+    this.modalRef.componentInstance.modalRef = this.modalRef;
     this.modalRef.result.then(() => {
       this.getStudents();
     });
