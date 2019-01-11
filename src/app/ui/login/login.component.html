@@ -1,0 +1,25 @@
+<h1>Welcome to Studentis</h1>
+<h6>Simple student management</h6>
+<h2>Login</h2>
+<form [formGroup]="loginForm" (ngSubmit)="onSubmit()">
+  <div class="form-group">
+    <label for="username">Username</label>
+    <input id="username" type="text" formControlName="username" class="form-control" [ngClass]="{ 'is-invalid': f.username.errors && (f.username.dirty || formSubmitted) }" />
+    <div *ngIf="!!f.username.errors" class="invalid-feedback">
+      <div *ngIf="!!f.username.errors.required">Username is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <label for="password">Password</label>
+    <input id="password" type="password" formControlName="password" class="form-control" [ngClass]="{ 'is-invalid': f.password.errors && (f.password.dirty || formSubmitted) }" />
+    <div *ngIf="!!f.password.errors" class="invalid-feedback">
+      <div *ngIf="!!f.password.errors.required">Password is required</div>
+    </div>
+  </div>
+  <div class="form-group">
+    <button class="btn btn-primary">Login</button>
+    <div *ngIf="error">
+      <div>{{error.message}}</div>
+    </div>
+  </div>
+</form>

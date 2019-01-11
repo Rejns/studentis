@@ -1,0 +1,23 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Subject selection</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="outline: none;">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form>
+      <div class="form-group">
+        <label for="subject">Subject</label>
+        <select [(ngModel)]="subject" id="subject" name="subject" class="form-control">
+          <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+        </select>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="modal.close('Save click')">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">EDIT</button>

@@ -1,0 +1,35 @@
+<ng-template #content let-modal>
+  <div class="modal-header">
+    <h4 class="modal-title" id="modal-basic-title">Add new student</h4>
+    <button type="button" class="close" aria-label="Close" (click)="modal.dismiss('Cross click')" style="outline: none;">
+      <span aria-hidden="true">&times;</span>
+    </button>
+  </div>
+  <div class="modal-body">
+    <form [formGroup]="studentAddForm">
+      <div class="form-group">
+        <label for="studentName">Name</label>
+        <input type="text" class="form-control" formControlName="studentName" id="studentName" [ngClass]="{ 'is-invalid': f.studentName.errors && formSubmitted }"/>
+        <div *ngIf="!!f.studentName.errors" class="invalid-feedback">
+          <div *ngIf="!!f.studentName.errors.required">Username is required</div>
+          <div *ngIf="!!f.studentName.errors.pattern">Alphabet chars only</div>
+          <div *ngIf="!!f.studentName.errors.maxlength">Maximum name length is 30 chars</div>
+        </div>
+      </div>
+      <div class="form-group">
+        <label for="studentSubject">Subject</label>
+        <select class="form-control" id="studentSubject" [formControlName]="'studentSubject'" [ngClass]="{ 'is-invalid': f.studentSubject.errors && formSubmitted }">
+          <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+        </select>
+        <div *ngIf="!!f.studentSubject.errors" class="invalid-feedback">
+          <div *ngIf="!!f.studentSubject.errors.required">Subject is required</div>
+        </div>
+      </div>
+    </form>
+  </div>
+  <div class="modal-footer">
+    <button type="button" class="btn btn-outline-primary" (click)="save(modal)">Save</button>
+  </div>
+</ng-template>
+
+<button class="btn btn-lg btn-outline-primary" (click)="open(content)">ADD</button>
