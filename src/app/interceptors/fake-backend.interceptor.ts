@@ -1,16 +1,14 @@
-import { Injectable } from '@angular/core';
-import {
-  HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse
-} from '@angular/common/http';
-import { Router } from '@angular/router';
-import { Observable, of, throwError } from 'rxjs';
+import {Injectable} from '@angular/core';
+import {HttpEvent, HttpInterceptor, HttpHandler, HttpRequest, HttpResponse} from '@angular/common/http';
+import {Observable, of, throwError} from 'rxjs';
 
 @Injectable()
 export class FakeBackendInterceptor implements HttpInterceptor {
 
-  constructor(private router: Router) {}
+  constructor() {}
 
-  /** Http interceptor that simulates backend. Prevent user from using API if user is not logged in. */
+
+  /** Http interceptor that simulates backend for authentication. */
   intercept(request: HttpRequest<any>, next: HttpHandler):
     Observable<HttpEvent<any>> {
     const registeredUser = { id: 1, username: 'test', password: 'test' };
@@ -29,10 +27,6 @@ export class FakeBackendInterceptor implements HttpInterceptor {
         // TODO: return 401
         return throwError({ error: { message: 'Username or password is incorrect' } });
       }
-    }
-
-    if (!localStorage.getItem('currentUser')) {
-      this.router.navigateByUrl('/login');
     }
 
     return next.handle(request);
