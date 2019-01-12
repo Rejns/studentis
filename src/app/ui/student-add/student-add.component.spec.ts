@@ -1,6 +1,7 @@
-import { async, ComponentFixture, TestBed } from '@angular/core/testing';
-
-import { StudentAddComponent } from './student-add.component';
+import {async, ComponentFixture, TestBed} from '@angular/core/testing';
+import {StudentAddComponent} from './student-add.component';
+import {FormsModule, ReactiveFormsModule} from '@angular/forms';
+import {HttpClientModule} from '@angular/common/http';
 
 describe('StudentAddComponent', () => {
   let component: StudentAddComponent;
@@ -8,7 +9,14 @@ describe('StudentAddComponent', () => {
 
   beforeEach(async(() => {
     TestBed.configureTestingModule({
-      declarations: [ StudentAddComponent ]
+      imports: [
+        HttpClientModule,
+        FormsModule,
+        ReactiveFormsModule
+      ],
+      declarations: [
+        StudentAddComponent
+      ]
     })
     .compileComponents();
   }));

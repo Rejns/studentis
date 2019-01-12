@@ -7,7 +7,7 @@ import {OverviewComponent} from './overview/overview.component';
 import {DataTableModule} from 'angular-6-datatable';
 import {StudentAddComponent} from './student-add/student-add.component';
 import {StudentEditComponent} from './student-edit/student-edit.component';
-import { StudentDeleteComponent } from './student-delete/student-delete.component';
+import {StudentDeleteComponent} from './student-delete/student-delete.component';
 
 @NgModule({
   imports: [

@@ -9,52 +9,35 @@ import {Student} from '../entities/student';
 export class StudentService {
 
   headers: HttpHeaders;
+  url: string;
 
   constructor(private http: HttpClient) {
     this.headers = new HttpHeaders({ 'Content-Type': 'application/json' });
+    this.url = 'api/students';
   }
 
 
   /** Gets a list of students */
   getStudents (pages): any {
-    return this.http.get('api/students', pages).pipe(
-      catchError((err) => {
-        return err;
-      })
-    );
+    return this.http.get(this.url, pages).pipe();
   }
 
 
   /** Adds student to the db */
   createStudent (student: Student): any {
-    return this.http.post('api/students', student,
-      { headers: this.headers }).pipe(
-      catchError((err) => {
-        return err;
-      })
-    );
+    return this.http.post('api/students', student, { headers: this.headers }).pipe();
   }
 
 
   /** Deletes student from the db */
   deleteStudent (id: number): any {
-    const url = `/api/students/${id}`;
-
-    return this.http.delete(url, { headers: this.headers }).pipe(
-      catchError((err) => {
-        return err;
-      })
-    );
+    const url = this.url + `/${id}`;
+    return this.http.delete(url, { headers: this.headers }).pipe();
   }
 
 
   /** Update existing student */
   updateStudent (student: Student): any {
-    return this.http.put('api/students', student,
-    { headers: this.headers }).pipe(
-      catchError((err) => {
-        return err;
-      })
-    );
+    return this.http.put(this.url, student, { headers: this.headers }).pipe();
   }
 }
