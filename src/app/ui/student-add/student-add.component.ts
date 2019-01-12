@@ -11,7 +11,7 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class StudentAddComponent implements OnInit {
 
   @Input() modalRef: NgbModalRef;
-  subjects: String[];
+  subjects: string[];
   formSubmitted = false;
   studentAddForm: FormGroup;
 

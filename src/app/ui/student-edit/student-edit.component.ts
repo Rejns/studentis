@@ -12,8 +12,8 @@ export class StudentEditComponent implements OnInit {
 
   @Input() student: Student;
   @Input() modalRef: NgbModalRef;
-  subjects: String[];
-  subject: String;
+  subjects: string[];
+  subject: string;
 
   constructor(private studentService: StudentService) { }
 
