@@ -44,7 +44,7 @@ export class OverviewComponent implements OnInit {
       this.collectionSize = result.length;
       this.data =  result.slice((this.page - 1) * this.resultsPerPage, this.page * this.resultsPerPage);
     }, (err) => {
-      // TODO: handle error
+      // TODO: handle error response
     });
   }
 

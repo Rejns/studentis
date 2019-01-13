@@ -8,6 +8,7 @@ import {InMemoryDataService} from './services/in-memory-data.service';
 import {HttpClientInMemoryWebApiModule} from 'angular-in-memory-web-api';
 import {HeaderComponent} from './ui/header/header.component';
 import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
+import {JwtInterceptor} from './interceptors/jwt.interceptor';
 
 @NgModule({
   imports: [
@@ -24,6 +25,7 @@ import {FakeBackendInterceptor} from './interceptors/fake-backend.interceptor';
     AppComponent, HeaderComponent
   ],
   providers: [
+    { provide: HTTP_INTERCEPTORS, useClass: JwtInterceptor, multi: true},
     { provide: HTTP_INTERCEPTORS, useClass: FakeBackendInterceptor, multi: true }
   ],
   bootstrap: [AppComponent]

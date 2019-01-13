@@ -18,12 +18,16 @@ export class StudentDeleteComponent implements OnInit {
   ngOnInit() {
   }
 
+
+  /** User confirmed student deletion. Delete user from DB and on success close dialog */
   confirm() {
     this.studentService.deleteStudent(this.student.id).subscribe(() => {
       this.modalRef.close();
     });
   }
 
+
+  /** Dismiss dialog */
   cancel() {
     this.modalRef.dismiss();
   }
