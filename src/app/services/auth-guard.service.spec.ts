@@ -31,12 +31,12 @@ describe('AuthGuardService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('canActivate() should return true when user is authenticated', inject([AuthGuardService], (service: AuthGuardService) => {
+  it('should return true if user is authenticated', inject([AuthGuardService], (service: AuthGuardService) => {
     localStorage.setItem('currentUser', JSON.stringify({ id: 1, name: 'renato', subject: 'english' }));
     expect(service.canActivate()).toBe(true);
   }));
 
-  it('canActivate() should return false when user is not authenticated', inject([AuthGuardService], (service: AuthGuardService) => {
+  it('should return false if is not authenticated', inject([AuthGuardService], (service: AuthGuardService) => {
     localStorage.removeItem('currentUser');
     expect(service.canActivate()).toBe(false);
   }));

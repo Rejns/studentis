@@ -37,7 +37,7 @@ describe('AuthenticationService', () => {
     expect(service).toBeTruthy();
   }));
 
-  it('logout() should log out user and navigate to /login', inject([AuthenticationService], (service: AuthenticationService) => {
+  it('should log out user on and navigate to /login', inject([AuthenticationService], (service: AuthenticationService) => {
     // mock local storage data
     localStorage.setItem('token', JSON.stringify({ token: 'token' }));
     localStorage.setItem('currentUser', JSON.stringify({ id: '1', name: 'renato' }));
