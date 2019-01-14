@@ -8,6 +8,10 @@
   border-bottom: 1px solid #eee;
 }
 
+.table-wrapper table {
+  table-layout: fixed;
+}
+
 .table-wrapper .edit {
   margin-right: 0.75rem;
   float: right;

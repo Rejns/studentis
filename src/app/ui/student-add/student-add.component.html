@@ -7,22 +7,37 @@
 <div class="modal-body">
   <form [formGroup]="studentAddForm">
     <div class="form-group">
-      <label for="studentName">Name</label>
-      <input type="text" class="form-control" formControlName="studentName" id="studentName" [ngClass]="{ 'is-invalid': f.studentName.errors && formSubmitted }"/>
-      <div *ngIf="!!f.studentName.errors" class="invalid-feedback">
-        <div *ngIf="!!f.studentName.errors.required">Username is required</div>
-        <div *ngIf="!!f.studentName.errors.pattern">Alphabet chars only</div>
-        <div *ngIf="!!f.studentName.errors.maxlength">Maximum name length is 30 chars</div>
+      <label for="name">Name</label>
+      <input type="text" class="form-control" formControlName="name" id="name" [ngClass]="{ 'is-invalid': f.name.errors && formSubmitted }"/>
+      <div *ngIf="!!f.name.errors" class="invalid-feedback">
+        <div *ngIf="!!f.name.errors.required">Username is required</div>
+        <div *ngIf="!!f.name.errors.pattern">Alphabet chars only</div>
+        <div *ngIf="!!f.name.errors.maxlength">Maximum name length is 30 chars</div>
       </div>
     </div>
     <div class="form-group">
-      <label for="studentSubject">Subject</label>
-      <select class="form-control" id="studentSubject" [formControlName]="'studentSubject'" [ngClass]="{ 'is-invalid': f.studentSubject.errors && formSubmitted }">
-        <option *ngFor="let subject of subjects" [ngValue]="subject">{{subject}}</option>
+      <label for="subject1">Subject1</label>
+      <select class="form-control" id="subject1" [formControlName]="'subject1'" [ngClass]="{ 'is-invalid': f.subject1.errors && formSubmitted }">
+        <option *ngFor="let subject of subjectsGroup1" [ngValue]="subject">{{subject.name}}</option>
       </select>
-      <div *ngIf="!!f.studentSubject.errors" class="invalid-feedback">
-        <div *ngIf="!!f.studentSubject.errors.required">Subject is required</div>
+      <div *ngIf="!!f.subject1.errors" class="invalid-feedback">
+        <div *ngIf="!!f.subject1.errors.required">Subject is required</div>
       </div>
+    </div>
+    <div class="form-group">
+      <label for="subject2">Subject2</label>
+      <select class="form-control" id="subject2" [formControlName]="'subject2'" [ngClass]="{ 'is-invalid': f.subject2.errors && formSubmitted }">
+        <option *ngFor="let subject of subjectsGroup2" [ngValue]="subject">{{subject.name}}</option>
+      </select>
+      <div *ngIf="!!f.subject2.errors" class="invalid-feedback">
+        <div *ngIf="!!f.subject2.errors.required">Subject is required</div>
+      </div>
+    </div>
+    <div class="form-group">
+      <label for="optional">Optional</label>
+      <select class="form-control" id="optional" [formControlName]="'optional'">
+        <option *ngFor="let subject of subjectsOptional" [ngValue]="subject">{{subject.name}}</option>
+      </select>
     </div>
   </form>
 </div>

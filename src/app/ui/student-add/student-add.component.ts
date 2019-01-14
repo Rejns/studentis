@@ -2,6 +2,7 @@ import {Component, Input, OnInit} from '@angular/core';
 import {NgbModalRef} from '@ng-bootstrap/ng-bootstrap';
 import {StudentService} from '../../services/student.service';
 import {FormBuilder, FormGroup, Validators} from '@angular/forms';
+import {Subject} from '../../entities/subject';
 
 @Component({
   selector: 'app-student-add',
@@ -11,7 +12,9 @@ import {FormBuilder, FormGroup, Validators} from '@angular/forms';
 export class StudentAddComponent implements OnInit {
 
   @Input() modalRef: NgbModalRef;
-  subjects: string[];
+  subjectsGroup1: Subject[];
+  subjectsGroup2: Subject[];
+  subjectsOptional: Subject[];
   formSubmitted = false;
   studentAddForm: FormGroup;
 
@@ -21,20 +24,38 @@ export class StudentAddComponent implements OnInit {
 
   ngOnInit() {
     // TODO: create service for subjects
-    this.subjects = ['Maths', 'Maths2', 'English'];
+
+    // mandatory subjects
+    this.subjectsGroup1 = [
+      { id: 1, name: 'Maths' },
+      { id: 2, name: 'Computer science'}
+    ];
+
+    this.subjectsGroup2 = [
+      { id: 3, name: 'English' },
+      { id: 4, name: 'Physics'}
+    ];
+
+    // optional subject
+    this.subjectsOptional = [
+      { id: 5, name: 'Non-duality'},
+      { id: 6, name: 'Consciousness'}
+    ];
 
     // reset inputs on dialog open
     this.studentAddForm = this.formBuilder.group({
-      studentName: ['', Validators.compose([
+      name: ['', Validators.compose([
         Validators.required,
         Validators.pattern(/^[a-zA-Z\s]*$/),
         Validators.maxLength(30)])],
-      studentSubject: [null, Validators.required]
+      subject1: [null, Validators.required],
+      subject2: [null, Validators.required],
+      optional: [null]
     });
   }
 
 
-  /** Adds new student to the DB */
+  /** Prevents form submit if form invalid and uses student service to create student */
   addStudent() {
     this.formSubmitted = true;
 
@@ -44,8 +65,12 @@ export class StudentAddComponent implements OnInit {
 
     this.studentService.createStudent({
       id: null,
-      name: this.f.studentName.value,
-      subject: this.f.studentSubject.value
+      name: this.f.name.value,
+      subject: [
+        {...this.f.subject1.value, ...{ mark: null }},
+        {...this.f.subject2.value, ...{ mark: null }},
+        this.f.optional.value ? {...this.f.optional.value, ...{ mark: null }} : null
+      ]
     }).subscribe(() => {
       this.modalRef.close();
     });

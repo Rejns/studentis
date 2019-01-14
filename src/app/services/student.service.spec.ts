@@ -28,7 +28,7 @@ describe('StudentService', () => {
   }));
 
   it('should return students', inject([StudentService], (service: StudentService) => {
-    const testData: Student[] = [{id: 1, name: 'Test Student', subject: 'English'}];
+    const testData: Student[] = [{id: 1, name: 'Test Student', subject: [ { id: 1, name: 'Maths', mark: null}]}];
 
     // Make an HTTP GET request
     httpClient.get<Data>(service.url)

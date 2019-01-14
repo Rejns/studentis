@@ -26,6 +26,15 @@ export class StudentService {
   }
 
 
+  /** Get student by id */
+  getStudent(id: number): any {
+    const url = this.url + `/${id}`;
+    return this.http.get(url, { headers: this.headers }).pipe(
+      catchError(this.handleError)
+    );
+  }
+
+
   /** Adds student to the db */
   createStudent (student: Student): any {
     return this.http.post('api/students', student, { headers: this.headers }).pipe(

@@ -10,7 +10,7 @@ describe('StudentEditComponent', () => {
   const student = {
     id: 1,
     name: 'Renato',
-    subject: 'English'
+    subject: [{id: 1, name: 'English', mark: null}]
   };
 
   beforeEach(async(() => {

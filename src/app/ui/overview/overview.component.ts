@@ -14,7 +14,7 @@ import {StudentDeleteComponent} from '../student-delete/student-delete.component
 })
 export class OverviewComponent implements OnInit {
 
-  data: Student[];
+  students: Student[];
   page = 1;
   resultsPerPage = 20;
   collectionSize = null;
@@ -42,7 +42,7 @@ export class OverviewComponent implements OnInit {
       // for simplicity we will do it on the client side, though doesn't really make sense
       // collection size should be returned from the server
       this.collectionSize = result.length;
-      this.data =  result.slice((this.page - 1) * this.resultsPerPage, this.page * this.resultsPerPage);
+      this.students =  result.slice((this.page - 1) * this.resultsPerPage, this.page * this.resultsPerPage);
     }, (err) => {
       // TODO: handle error response
     });
@@ -60,14 +60,16 @@ export class OverviewComponent implements OnInit {
   }
 
 
-  /** Opens dialog for editing student and on success refreshes student list */
+  /** Gets a fresh student instance and opens dialog for editing student and on success refreshes student list */
   openStudentEditDialog(student: Student) {
-    this.modalRef = this.modalService.open(StudentEditComponent);
-    this.modalRef.componentInstance.student = student;
-    this.modalRef.componentInstance.subject = student.subject;
-    this.modalRef.componentInstance.modalRef = this.modalRef;
-    this.modalRef.result.then(() => {
-      this.getStudents();
+    this.studentService.getStudent(student.id).subscribe(studentResult => {
+      this.modalRef = this.modalService.open(StudentEditComponent);
+      this.modalRef.componentInstance.student = studentResult;
+      this.modalRef.componentInstance.subject = studentResult.subject;
+      this.modalRef.componentInstance.modalRef = this.modalRef;
+      this.modalRef.result.then(() => {
+        this.getStudents();
+      });
     });
   }
 
